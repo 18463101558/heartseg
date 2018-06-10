@@ -1,0 +1,46 @@
+http://www.sdspeople.fudan.edu.cn/zhuangxiahai/0/mmwhs/
+im[im == 850] = 7肺动脉
+im[im == 820] = 6升主动脉
+im[im == 600] = 5右心室血腔
+im[im == 550] = 4右心房血腔
+im[im == 500] = 3左心室血腔
+im[im == 420] = 2左心房血腔
+im[im == 205] = 1左心室心肌
+
+im[im==7]=250
+im[im==6]=200
+im[im==5]=150
+im[im==4]=100
+im[im==3]=75
+im[im==2]=50
+im[im==1]=25
+(1) the left ventricle blood cavity (label value 500);
+(2) the right ventricle blood cavity (label value 600);
+(3) the left atrium blood cavity (label value 420);
+(4) the right atrium blood cavity (label value 550);
+(5) the myocardium of the left ventricle (label value 205);
+(6) the ascending aorta (label value 820), which is defined as the aortic trunk from the aortic valve to the superior level of the atria; for example, the mean length of this trunk is about 41.9 mm as we measured in 25 healthy subjects;
+(7) the pulmonary artery (label value 850), 
+
+ct训练图像处理完毕一个3071.0
+ct训练图像处理完毕一个1438.0
+ct训练图像处理完毕一个3071.0
+ct训练图像处理完毕一个1398.0
+ct训练图像处理完毕一个1529.0
+ct训练图像处理完毕一个3006.0
+ct训练图像处理完毕一个1534.0
+ct训练图像处理完毕一个1663.0
+ct训练图像处理完毕一个3120.0
+ct训练图像处理完毕一个2855.0
+ct训练图像处理完毕一个2530.0
+ct训练图像处理完毕一个1468.0
+ct训练图像处理完毕一个1500.0
+ct训练图像处理完毕一个2483.0
+ct训练图像处理完毕一个2216.0
+ct训练图像处理完毕一个3071.0
+ct训练图像处理完毕一个1358.0
+ct训练图像处理完毕一个1503.0
+ct训练图像处理完毕一个3136.0
+ct训练图像处理完毕一个3071.0
+
+

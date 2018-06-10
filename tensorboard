@@ -1,0 +1,1 @@
+tensorboard --logdir=/home/amax/yechengqin/heart-segmentation/Models/AtrousFCN_Resnet50_16s/logs
