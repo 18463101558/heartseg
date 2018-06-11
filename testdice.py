@@ -240,48 +240,48 @@ def savepicture(name,im2):
     cv2.imwrite(name, im)
 
 def compute_predict_dice(result):
-    """im1= get_one_hot_arrey("viewlabel/全心脏/1001tr200.png")  # 获取尚未one-hot编码的内容
-y_true = np.zeros((1, 512, 512, 1))
-y_true[0] = im1
-y_pred=result
-sess = tf.InteractiveSession()
-nb_classes = y_pred.shape[-1]   # 获取类别数量
-y_pred = K.reshape(y_pred, (-1, nb_classes))  # 压缩成二维,其实感觉好像也没啥必要来着
-y_pred= tf.nn.softmax( y_pred )#经历一个softmax将其转变成二维
-y_true=K.one_hot(tf.to_int32(K.flatten(y_true)),
-                   nb_classes)
-y_pred=K.flatten(y_pred)
-y_true=K.flatten(y_true)
-fenzi=K.sum(2*tf.to_float(np.multiply(y_pred,y_true)))
-fenmu=K.sum(tf.to_float(y_pred))+K.sum(tf.to_float(y_true))
-result= 1-fenzi/fenmu
-sess.run(result)
-print(result.eval())
-"""
-    y_true = get_one_hot_arrey("viewlabel/全心脏/1001tr200.png")  # 获取尚未one-hot编码的内容
-    im1 = np.zeros((1, 512, 512, 1))
-    im1[0] = y_true
-
+    im1= get_one_hot_arrey("viewlabel/全心脏/1001tr200.png")  # 获取尚未one-hot编码的内容
+    y_true = np.zeros((1, 512, 512, 1))
+    y_true[0] = im1
+    y_pred=result
     sess = tf.InteractiveSession()
-    feidongmai = FDM(im1,result)
-    shengzhudongmai=SZDM(im1,result)
-    youxinshixueqiang=YXSXQ(im1,result)
-    youxinfangxueqiang=YXFXQ(im1,result)
-    zuoxinshixueqiang=ZXSXQ(im1,result)#这一个出毛病了
-    zuoxinfangxueqiang=ZXFXQ(im1,result)
-    zuoxinshixinji=ZXSXJ(im1,result)
-    #dice_background=background(im1,result)
-    average =(feidongmai + shengzhudongmai + youxinshixueqiang + \
-              youxinfangxueqiang + zuoxinshixueqiang + zuoxinfangxueqiang + zuoxinshixinji)/7 #+ dice_background
-    sess.run(average)
-    print("肺动脉的dice： %s" % feidongmai.eval())
-    print("升主动脉的dice： %s" % shengzhudongmai.eval())
-    print("右心室血腔的dice： %s" % youxinshixueqiang.eval())
-    print("右心房血腔的dice： %s" % youxinfangxueqiang.eval())
-    print("左心室血腔的dice： %s" % zuoxinshixueqiang.eval())
-    print("左心房血腔的dice： %s" % zuoxinfangxueqiang.eval())
-    print("左心室心肌的dice： %s" % zuoxinshixinji.eval())
-    print("平均的dice： %s" % average.eval())
+    nb_classes = y_pred.shape[-1]   # 获取类别数量
+    y_pred = K.reshape(y_pred, (-1, nb_classes))  # 压缩成二维,其实感觉好像也没啥必要来着
+    y_pred= tf.nn.softmax( y_pred )#经历一个softmax将其转变成二维
+    y_true=K.one_hot(tf.to_int32(K.flatten(y_true)),
+                   nb_classes)
+    y_pred=K.flatten(y_pred)
+    y_true=K.flatten(y_true)
+    fenzi=K.sum(2*tf.to_float(np.multiply(y_pred,y_true)))
+    fenmu=K.sum(tf.to_float(y_pred))+K.sum(tf.to_float(y_true))
+    result= 1-fenzi/fenmu
+    sess.run(result)
+    print(result.eval())
+
+    # y_true = get_one_hot_arrey("viewlabel/全心脏/1001tr200.png")  # 获取尚未one-hot编码的内容
+    # im1 = np.zeros((1, 512, 512, 1))
+    # im1[0] = y_true
+    #
+    # sess = tf.InteractiveSession()
+    # feidongmai = FDM(im1,result)
+    # shengzhudongmai=SZDM(im1,result)
+    # youxinshixueqiang=YXSXQ(im1,result)
+    # youxinfangxueqiang=YXFXQ(im1,result)
+    # zuoxinshixueqiang=ZXSXQ(im1,result)#这一个出毛病了
+    # zuoxinfangxueqiang=ZXFXQ(im1,result)
+    # zuoxinshixinji=ZXSXJ(im1,result)
+    # #dice_background=background(im1,result)
+    # average =(feidongmai + shengzhudongmai + youxinshixueqiang + \
+    #           youxinfangxueqiang + zuoxinshixueqiang + zuoxinfangxueqiang + zuoxinshixinji)/7 #+ dice_background
+    # sess.run(average)
+    # print("肺动脉的dice： %s" % feidongmai.eval())
+    # print("升主动脉的dice： %s" % shengzhudongmai.eval())
+    # print("右心室血腔的dice： %s" % youxinshixueqiang.eval())
+    # print("右心房血腔的dice： %s" % youxinfangxueqiang.eval())
+    # print("左心室血腔的dice： %s" % zuoxinshixueqiang.eval())
+    # print("左心房血腔的dice： %s" % zuoxinfangxueqiang.eval())
+    # print("左心室心肌的dice： %s" % zuoxinshixinji.eval())
+    # print("平均的dice： %s" % average.eval())
 if __name__ == '__main__':
 
     model_name = 'AtrousFCN_Resnet50_16s'
