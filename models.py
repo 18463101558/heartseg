@@ -246,17 +246,26 @@ def AtrousFCN_Resnet50_16s(input_shape = None, weight_decay=0., batch_momentum=0
     return model
 
 
+
 def DenseNet_FCN(input_shape=None, weight_decay=1E-4,
                     batch_momentum=0.9, batch_shape=None, classes=8,
                     include_top=False, activation='sigmoid'):
-    x = createDenseNet(8, input_shape, depth=40, nb_dense_block=3, growth_rate=12, nb_filter=16, dropout_rate=None,
-                     weight_decay=1E-4, verbose=True)
+    if batch_shape:
+        img_input = Input(batch_shape=batch_shape)
+        image_size = batch_shape[1:3]
+    else:
+        img_input = Input(shape=input_shape)
+        image_size = input_shape[0:2]
+    print(img_input.shape)
+    nb_layers_per_block=[4, 5, 7, 10, 12, 15]
+    x =create_fcn_dense_net(img_input,  nb_dense_block=5,growth_rate=12, reduction=0.0, dropout_rate=0.0, weight_decay=1e-4,nb_layers_per_block=nb_layers_per_block, init_conv_filters=48)
     print("此时x的shape")
     print(x.shape)
     x = Conv2D(classes, (1, 1), kernel_initializer='he_normal', activation='linear', padding='same', strides=(1, 1),
                kernel_regularizer=l2(weight_decay))(x)
+    print(x.shape)
     x = BilinearUpSampling2D(target_size=tuple(image_size))(x)  # 512*512,他奶奶个腿就是一个双线性插值的操作
-
+    print(x.shape)
     model = Model(img_input, x, name='DenseNet_FCN')
     # TODO(ahundt) add weight loading
     return model

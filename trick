@@ -1,0 +1,6 @@
+1.可以将整个块放进列表里面，然后将这个块用于解码操作
+x, nb_filter = __dense_block(x, nb_layers[block_idx], nb_filter, growth_rate, dropout_rate=dropout_rate,
+                                     weight_decay=weight_decay)
+skip_list.append(x)
+x = concatenate([t, skip_list[block_idx]], axis=concat_axis)
+2.当batch大于1时，dice指数与单张图片计算出的dice指数不一样，原理在于pred1有一个白点时，pred2无白点，（label为全黑）这时dice分数为0和1，但是如果合并到一块来计算时，就会出现dice为0（因为它发现batch的交集为0）

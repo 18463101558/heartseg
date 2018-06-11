@@ -93,8 +93,8 @@ def train(batch_size, epochs, lr_base, lr_power, weight_decay, classes,
     #y_true:真实标签,theano/tensorflow张量
     #y_pred:预测值, 与y_true形式相同的theano/tensorflow张量
     model.compile(loss=loss_fn,
-                  optimizer=optimizer)
-                  #metrics=metrics)
+                  optimizer=optimizer,
+                  metrics=metrics)
 
     # 设置model的保存路径
     current_dir = os.path.dirname(os.path.realpath(__file__))  # 获得当前py文件所在的路径
@@ -165,14 +165,14 @@ def train(batch_size, epochs, lr_base, lr_power, weight_decay, classes,
             label_dir=label_dir,
             classes=classes,
             target_size=target_size, color_mode='grayscale',
-            batch_size=batch_size, shuffle=True,
+            batch_size=1, shuffle=True,
         ),
        )
 
     model.save_weights(save_path+'/model.hdf5')
 
 if __name__ == '__main__':
-    model_name = 'DenseNet_FCN'
+    model_name = 'AtrousFCN_Resnet50_16s'
     batch_size =8
     batchnorm_momentum = 0.95
     epochs = 250
