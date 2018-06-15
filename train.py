@@ -153,7 +153,7 @@ def train(batch_size, epochs, lr_base, lr_power, weight_decay, classes,
             label_dir=label_dir,
             classes=classes,
             target_size=target_size, color_mode='grayscale',
-            batch_size=batch_size, shuffle=True,
+            batch_size=1, shuffle=True,
         ),
         steps_per_epoch=steps_per_epoch,#当生成器返回steps_per_epoch次数据时计一个epoch结束，执行下一个epoch
         epochs=epochs,#整数，数据迭代的轮数
@@ -173,7 +173,7 @@ def train(batch_size, epochs, lr_base, lr_power, weight_decay, classes,
 
 if __name__ == '__main__':
     model_name = 'AtrousFCN_Resnet50_16s'
-    batch_size =8
+    batch_size =1
     batchnorm_momentum = 0.95
     epochs = 250
     lr_base = 0.01 * (float(batch_size) / 16)
@@ -195,7 +195,7 @@ if __name__ == '__main__':
     classes =8
 
     # ###################### loss function & metric ########################
-    loss_fn = softmax_crossentropy
+    loss_fn = dice_loss
     metrics =[average,FDM,SZDM,YXSXQ,YXFXQ,ZXSXQ,ZXFXQ,ZXSXJ]
     loss_shape = None
 

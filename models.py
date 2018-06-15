@@ -19,7 +19,7 @@ from utils.get_weights_path import *
 from utils.basics import *
 from utils.resnet_helpers import *
 from utils.BilinearUpSampling import *
-
+from utils.crf import CrfRnnLayer
 
 def top(x, input_shape, classes, activation, weight_decay):
 
@@ -237,6 +237,13 @@ def AtrousFCN_Resnet50_16s(input_shape = None, weight_decay=0., batch_momentum=0
     x = Conv2D(classes, (1, 1), kernel_initializer='he_normal', activation='linear', padding='same', strides=(1, 1), kernel_regularizer=l2(weight_decay))(x)
     x = BilinearUpSampling2D(target_size=tuple(image_size))(x)#512*512,他奶奶个腿就是一个双线性插值的操作
     #放大到跟原图像相同大小
+    x = CrfRnnLayer(image_dims=(512, 512),
+                         num_classes=8,
+                         theta_alpha=160.,
+                         theta_beta=3.,
+                         theta_gamma=3.,
+                         num_iterations=10,
+                         name='crfrnn')([x, img_input])
     print(u"最后shape：" + str(x.shape))#(?, 512, 512, 8)
     model = Model(img_input, x)#生成keras的model
     #把path中包含的"~"和"~user"转换成用户目录

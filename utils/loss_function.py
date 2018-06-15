@@ -38,13 +38,13 @@ def softmax_crossentropy(y_true, y_pred):
     #
     cross_entropy = -K.sum(y_true * log_softmax, axis=1)
     cross_entropy_mean = K.mean(cross_entropy)#返回的是平均交叉熵
-
+    cross_entropy_mean+=dice_loss
     return cross_entropy_mean
 
 
 def dice_loss(y_true,y_pred):#计算dice指数（实际上这里是伪dice）
     nb_classes = y_pred.shape[-1]   # 获取类别数量
-    y_pred = K.reshape(y_pred, (-1, nb_classes))  # 压缩成二维,其实感觉好像也没啥必要来着
+    y_pred = K.reshape(y_pred, (-1, int(nb_classes)))
     y_pred= tf.nn.softmax( y_pred )#经历一个softmax将其转变成二维
     y_true=K.one_hot(tf.to_int32(K.flatten(y_true)),
                    nb_classes)
@@ -52,4 +52,5 @@ def dice_loss(y_true,y_pred):#计算dice指数（实际上这里是伪dice）
     y_true=K.flatten(y_true)
     fenzi=K.sum(2*tf.to_float(np.multiply(y_pred,y_true)))
     fenmu=K.sum(tf.to_float(y_pred))+K.sum(tf.to_float(y_true))
+    print("diceloss")
     return 1-fenzi/fenmu
